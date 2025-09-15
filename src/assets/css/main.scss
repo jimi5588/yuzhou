@@ -1,0 +1,149 @@
+/* Import Google font - Poppins */
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"); */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 15px;
+}
+/* 全局禁止文字选中 */
+* {
+  user-select: none;          /* 标准 */
+  -webkit-user-select: none;  /* Chrome/Safari */
+  -moz-user-select: none;     /* Firefox */
+  -ms-user-select: none;      /* IE/Edge */
+  -webkit-touch-callout: none; /* iOS Safari 长按 */
+}
+
+/* 清除所有图标的内联fill属性 */
+svg symbol path[fill] {
+  fill: inherit !important;
+}
+
+svg symbol [fill="none"] {
+  fill: none !important;
+}
+
+/* 清除所有图标的内联尺寸 */
+svg symbol {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#app {
+  max-width: 450px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.van-theme-light {
+  --text-color: #222;
+  --text-color2: #555;
+  --bg-sub: #fff;
+
+  body {
+    background: #e5e5e5;
+  }
+
+  #app {
+    background: #f2f6f7 !important;
+    color: var(--text-color)
+  }
+
+  .van-field {
+    --van-field-placeholder-text-color: #999 !important;
+  }
+
+}
+
+.van-theme-dark {
+  --text-color: #fff;
+  --text-color2: #aaa;
+  --bg-sub: #16191e;
+
+  body {
+    background: #222 !important;
+  }
+
+  #app {
+    background: #0f1012 !important;
+    color: var(--text-color)
+  }
+
+  .van-field {
+    --van-field-placeholder-text-color: #999 !important;
+  }
+
+}
+
+
+::-webkit-scrollbar {
+  width: 0px;
+  background-color: transparent;
+}
+
+/* 解决回填后带背景色问题 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-transition-delay: 111111s;
+  -webkit-transition: color 11111s ease-out, background-color 111111s ease-out;
+}
+
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.space {
+  width: 100%;
+  height: 8px;
+  /* background: #eaeaea; */
+}
+
+.space2 {
+  width: 100%;
+  height: 5px;
+  /* background: #f2f5ff; */
+}
+
+:root:root {
+  --van-cell-border-color: transparent;
+  --van-toast-default-width: fit-content !important;
+}
+
+.van-button--primary {
+  --van-button-primary-background: var(--color-theme);
+  backdrop-filter: blur(10px);
+  border-radius: 5px !important;
+  border: none !important;
+  height: 48px !important;
+  font-size: 16px !important;
+
+  span {
+    font-size: 19px !important;
+  }
+}
+
+.van-overlay,
+.van-popup--bottom {
+  max-width: 450px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+.van-popup--center {
+  max-width: 420px !important;
+}
+
+.van-toast {
+  min-width: 88px;
+  max-width: 360px !important;
+}
