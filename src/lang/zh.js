@@ -592,4 +592,8 @@ export default {
   shengou_out: '卖出记录',
   today_revenue: '今日收益',
 
+  splot_assets: '现金账户(USD)',
+  splot_assets_jirong: '金融账户(USD)',
+
+
 }

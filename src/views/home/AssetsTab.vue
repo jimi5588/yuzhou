@@ -22,20 +22,6 @@
         ≈ {{ showAssets ? user?.balance : '******' }} USD
       </div>
 
-      <div class="profit-section">
-        <div class="profit-item">
-          <div class="profit-label">{{ t('assets_current_profit') }}</div>
-          <div class="profit-value">{{ showAssets ? (user?.todayprofit || 0).toFixed(2) : '******' }}</div>
-        </div>
-        <div class="profit-item">
-          <div class="profit-label">{{ t('assets_profit_ratio') }}</div>
-          <div class="profit-value">{{ showAssets ? ((user?.allprofit || 0) * 100).toFixed(2) + '%' : '******' }}</div>
-        </div>
-        <div class="profit-item">
-          <div class="profit-label">{{ t('trade_margin') }}</div>
-          <div class="profit-value">{{ showAssets ? (user?.frozen || 0).toFixed(2) : '******' }}</div>
-        </div>
-      </div>
     </div>
 
     <van-grid :column-num="4" :border="false" class="action-grid">
@@ -76,50 +62,23 @@
       </van-grid-item>
     </van-grid>
 
-    <!-- 持有仓位 --> 
-     <div class="trade-detail">
-        <span class="trade-title">{{ t('today_revenue') }}({{count}})</span>
-        <List :listRefresh="listRefresh" @load-data="loadData" v-slot:default="slotProps">
-          <!-- 列表渲染 -->
-          <div class="order-item" v-for="item in list" :key="item.id">
-            <div class="order-header">
-              <div class="left">
-                <span class="buy-tag" :class="item.trade_type == 1 ? 'buy' : 'sell'">
-                  {{ item.trade_type == 1 ? t('common_buy') : t('common_sell') }}
-                </span>
-                <span class="lot-size">{{ item.symbol }}</span>
-                <span class="lot-size">x{{ Number(item.order_quantity) + t('trade_lots') }}</span>
-              </div>
-              <div class="right">
-                <span class="price" :class="item.tempProfitPrice < 0 ? 'down' : 'up'">
-                  {{ $t('yuji_profit') }}：{{ item.tempProfitPrice }}
-                </span>
-              </div>
-            </div>
-            <div class="item-row">
-              <div class="item">
-                <span class="item-title">{{ t('trade_opening_price') }}</span>
-                <span class="item-value">{{ item.open_price }}</span>
-              </div>
-              <div class="item">
-                <span class="item-title">{{ t('trade_current_price') }}</span>
-                <span class="item-value">{{ item.current_price }}</span>
-              </div>
-            </div>
-            <div class="item-row">
-              <div class="item">
-                <span class="item-title">{{ t('trade_margin') }}</span>
-                <span class="item-value">{{ item.margin }}</span>
-              </div>
-              <div class="item">
-                <span class="item-title">{{ t('trade_position_opening_time') }}</span>
-                <span class="item-value">{{ item.order_time }}</span>
-              </div>
-            </div>
-          </div>
-        </List>
+    <!-- 今日收益 --> 
+    <div class="trade-detail">
+      <span class="trade-title">{{ t('today_revenue') }}</span>
 
+      <div class="trade-row">
+        <div class="label">{{ t('splot_assets') }}</div>
+        <div class="value" :class="{ up: user?.todayprofit > 0, down: user?.todayprofit < 0 }">
+          {{ user?.todayprofit }}
+        </div>
+      </div>
+
+      <div class="trade-row">
+        <div class="label">{{ t('splot_assets_jirong') }}</div>
+        <div class="value">0</div>
+      </div>
     </div>
+
     
   </div>
   <FloatBubble ></FloatBubble>
@@ -273,22 +232,6 @@ const loadData = (params, successCallback, errCallback) => {
   background-color: hsla(0, 0%, 100%, .1);
 }
 
-.profit-item {
-  /* flex: 1; */
-}
-
-.profit-label {
-  max-width: 120px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 4px;
-}
-
-.profit-value {
-  font-size: 16px;
-  font-weight: 500;
-}
-
 .action-grid {
   margin: 20px 0;
   border-radius: 8px;
@@ -374,18 +317,6 @@ const loadData = (params, successCallback, errCallback) => {
       width: 400px;               // 下拉箭头按钮宽度固定
       margin: 0 auto;             // 居中
     }
-}
-
-.trade-detail {
-  margin-top: 20px;
-}
-
-.trade-detail span {
-  font-weight: 500;
-  font-size: 14px;
-  color: var(--text-color);
-  margin-bottom: 8px;
-  display: block;
 }
 
 .order-item {
@@ -482,4 +413,57 @@ const loadData = (params, successCallback, errCallback) => {
   border-left: 3px solid #1989fa; /* 左边彩色条，强调标题 */
   padding-left: 8px;         /* 左边内边距 */
 }
+
+.trade-detail {
+  margin-top: 20px;
+  padding: 16px;
+  //background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+  .trade-title {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 12px;
+    border-left: 3px solid #1989fa;
+    padding-left: 8px;
+  }
+
+  .trade-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 6px;
+    //background: #f9f9f9;
+    margin-bottom: 10px; // 每行之间留出间隔
+
+    .label {
+      font-size: 13px;
+      //color: #666;
+    }
+
+    .value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-color);
+
+      &.up {
+        color: #2ecc71; // 绿色
+      }
+      &.down {
+        color: #e74c3c; // 红色
+      }
+    }
+  }
+
+  // 去掉最后一行的 margin-bottom
+  .trade-row:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
 </style>
