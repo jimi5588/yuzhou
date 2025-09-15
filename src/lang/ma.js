@@ -487,4 +487,7 @@ export default {
     shengou_myslef: "Aset Saya",
     shengou_out: "Rekod Jualan",
     today_revenue: "Pendapatan Hari Ini",
+
+    spot_assets: 'Akaun spot(USD)',
+    splot_assets_jirong: 'Akaun Kewangan(USD)',
 }

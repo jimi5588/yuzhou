@@ -556,4 +556,7 @@ export default {
     shengou_myslef: "내 자산",
     shengou_out: "판매 기록",
     today_revenue: "오늘의 수익",
+
+    splot_assets: '현물 계좌(USD)',
+    splot_assets_jirong: '금융 계좌(USD)',
 }

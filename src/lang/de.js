@@ -466,4 +466,6 @@ export default {
     shengou_out: 'Verkaufsaufzeichnungen',
     today_revenue: 'Heutiger Umsatz',
 
+    splot_assets: 'Spotkonto (USD)',
+    splot_assets_jirong: 'Finanzkonto (USD)',
 }

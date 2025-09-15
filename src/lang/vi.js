@@ -593,5 +593,6 @@ export default {
     shengou_out: "Lịch sử bán hàng",
     today_revenue: "Doanh thu hôm nay",
 
-    
+    splot_assets: 'Tài khoản giao ngay (USD)',
+    splot_assets_jirong: 'Tài khoản tài chính (USD)',
 }

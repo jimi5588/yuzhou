@@ -550,4 +550,7 @@ shengou_myslef: 'Mis activos',
 shengou_out: 'Registros de venta',
 today_revenue: 'Ingresos de hoy',
 
+splot_assets: 'Spot account(USD)',
+splot_assets_jirong: 'Financial Account(USD)',
+
 }

@@ -596,4 +596,7 @@ export default {
     shengou_myslef: 'My Assets',
     shengou_out: 'Sell Recorf',
     today_revenue: "Today's earnings",
+
+    splot_assets: 'Spot account(USD)',
+    splot_assets_jirong: 'Financial Account(USD)',
 }

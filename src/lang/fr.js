@@ -581,4 +581,6 @@ shengou_my: "Mes demandes d'achat",
 shengou_myslef: "Mes actifs",
 shengou_out: "Enregistrements de vente",
 today_revenue: "Revenus d'aujourd'hui",
+splot_assets: 'Spot account(USD)',
+splot_assets_jirong: 'Financial Account(USD)',
 }

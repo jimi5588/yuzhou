@@ -477,4 +477,8 @@ export default {
     shengou_myslef: "ทรัพย์สินของฉัน",
     shengou_out: "บันทึกการขาย",
     today_revenue: "รายได้ของวันนี้",
+
+    splot_assets: 'บัญชี Spot (USD)',
+
+    splot_assets_jirong: 'บัญชีการเงิน (USD)'
 }

@@ -589,4 +589,7 @@ export default {
     shengou_myslef: "我的資産",
     shengou_out: "売却記録",
     today_revenue: "今日の収益",
+
+    splot_assets: 'スポット口座(USD)',
+    splot_assets_jirong: '金融口座(USD)',
 }
