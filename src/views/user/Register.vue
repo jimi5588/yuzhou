@@ -40,7 +40,13 @@
           <img src="../../assets/images/icon_password.png" />
         </template>
       </van-field>
-
+      <div class="footer" style="text-align: center;
+        margin: 10px 0;
+        font-size: 14px;
+        color: #666;">
+        <p><span class="sign-up" @click="toPage('user/agreement')"  style="color: var(--color-theme); font-weight: normal;"><< {{ $t('tiaokuan') }} >></span>
+        </p>
+      </div>
       <div class="submit-btn">
         <van-button block type="primary" native-type="submit">
           {{ $t('user_sign_up') }}
@@ -60,7 +66,7 @@ import { onBeforeMount, ref, onUnmounted, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
-import { userRegister } from '@/api';
+import { userRegister,articl } from '@/api';
 
 const { t } = useI18n();
 const store = useStore();

@@ -82,6 +82,13 @@
               <img src="../../assets/images/index-pop-8.png" />
             </template>
           </van-cell>
+
+          <van-cell :title="t('common_logout')" is-link @click="logout">
+            <template #icon>
+              <img src="../../assets/images/logout.png" />
+            </template>
+          </van-cell>
+
         </van-cell-group>
       </div>
 
@@ -105,15 +112,17 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { onMounted, ref, reactive, onBeforeMount, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useKlineSocket } from '@/service/klineSocket';
 import { getUserInfo, exchangecurrency } from '@/api'
 
 const { t } = useI18n()
 const store = useStore()
 const router = useRouter()
+const klineSocket = useKlineSocket()
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 // 默认头像
@@ -184,6 +193,14 @@ onMounted(async () => {
   } catch (err) {
   }
 })
+
+// Logout function
+const logout = () => {
+  localStorage.removeItem('token')
+  klineSocket.close()
+  toPage('login')
+}
+
 </script>
 
 

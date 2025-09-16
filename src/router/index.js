@@ -84,6 +84,12 @@ const router = createRouter({
             component: () => import('../views/user/AboutVip'),
         },
         {
+            path: "/pages/user/agreement",
+            name: 'agreement',
+            component: () => import('../views/user/Agreement'),
+            meta: { requiresAuth: false }   // 👈 不需要认证
+        },
+        {
             path: "/pages/user/share",
             name: 'share',
             component: () => import('../views/user/Share'),

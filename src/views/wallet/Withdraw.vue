@@ -210,10 +210,6 @@ const toPage = (path) => {
 }
 
 const submit = () => {
-    if (!selectedWallet.value.id) {
-        showFailToast(t('wallet_select_currency_title'))
-        return
-    } 
 
     if (!amount.value || amount.value < 1) {
         showFailToast(t('Minimum_withdrawal_amount'))

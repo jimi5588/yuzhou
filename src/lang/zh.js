@@ -595,5 +595,5 @@ export default {
   splot_assets: '现金账户(USD)',
   splot_assets_jirong: '金融账户(USD)',
 
-
+  tiaokuan: '我已阅读并同意上述条款',
 }
