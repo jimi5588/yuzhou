@@ -559,4 +559,6 @@ export default {
 
     splot_assets: '현물 계좌(USD)',
     splot_assets_jirong: '금융 계좌(USD)',
+
+    tiaokuan: '가입 약관',
 }

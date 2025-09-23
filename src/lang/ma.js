@@ -490,4 +490,7 @@ export default {
 
     spot_assets: 'Akaun spot(USD)',
     splot_assets_jirong: 'Akaun Kewangan(USD)',
+
+    tiaokuan: 'Syarat Pendaftaran',
+
 }

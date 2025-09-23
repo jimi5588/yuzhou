@@ -13,9 +13,11 @@
         </span>
 
         <!-- 币种选择 -->
-        <van-dropdown-menu active-color="#1989fa" direction="down">
+        <!-- <van-dropdown-menu active-color="#1989fa" direction="down">
           <van-dropdown-item v-model="selectedCurrency" :options="currencyOptions" @change="onCurrencyChange"/>
-        </van-dropdown-menu>
+        </van-dropdown-menu> -->
+        <!-- 固定币种显示 -->
+        <span class="currency">USD</span>
       </div>
 
       <div class="converted-amount">
@@ -465,5 +467,10 @@ const loadData = (params, successCallback, errCallback) => {
   }
 }
 
+.currency {
+  font-size: 20px;      /* 稍微比数字小一点点 */
+  font-weight: 500;     /* 半粗体，不要太细 */
+  color: rgba(255,255,255,0.9); /* 比数字颜色淡一点 */
+}
 
 </style>

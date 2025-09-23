@@ -170,10 +170,10 @@ const copyInviteCode = () => {
     navigator.clipboard
       .writeText(user.value.invite_code)
       .then(() => {
-        showSuccessToast('正常にコピーされました!')
+        showSuccessToast('Copied')
       })
       .catch(() => {
-        showFailToast('コピーに失敗しました')
+        showFailToast('Replication failed')
       })
   }
 }

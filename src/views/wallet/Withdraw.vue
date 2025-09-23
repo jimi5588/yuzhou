@@ -132,6 +132,8 @@ onMounted(() => {
     showDialog({
       title: t('user_password'),
       message: t('withdraw_set_paypassword_message'),
+      confirmButtonText: t('common_confirm'), 
+
     }).then(() => {
       router.push({ path: '/pages/user/SetPayPassword' })
     }).catch(() => {

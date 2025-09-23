@@ -592,4 +592,6 @@ export default {
 
     splot_assets: 'スポット口座(USD)',
     splot_assets_jirong: '金融口座(USD)',
+
+    tiaokuan: 'とうろくきやく',
 }

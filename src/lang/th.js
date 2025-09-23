@@ -480,5 +480,7 @@ export default {
 
     splot_assets: 'บัญชี Spot (USD)',
 
-    splot_assets_jirong: 'บัญชีการเงิน (USD)'
+    splot_assets_jirong: 'บัญชีการเงิน (USD)',
+
+    tiaokuan: 'เงื่อนไขการลงทะเบียน',
 }

@@ -553,4 +553,6 @@ today_revenue: 'Ingresos de hoy',
 splot_assets: 'Spot account(USD)',
 splot_assets_jirong: 'Financial Account(USD)',
 
+tiaokuan: 'términos de registro',
+
 }
