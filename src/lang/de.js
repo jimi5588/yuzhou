@@ -468,4 +468,6 @@ export default {
 
     splot_assets: 'Spotkonto (USD)',
     splot_assets_jirong: 'Finanzkonto (USD)',
+
+    tiaokuan: 'Nutzungsbedingungen',
 }

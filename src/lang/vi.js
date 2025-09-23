@@ -595,4 +595,6 @@ export default {
 
     splot_assets: 'Tài khoản giao ngay (USD)',
     splot_assets_jirong: 'Tài khoản tài chính (USD)',
+
+    tiaokuan: "Điều khoản đăng ký",
 }

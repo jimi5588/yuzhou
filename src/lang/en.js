@@ -599,4 +599,6 @@ export default {
 
     splot_assets: 'Spot account(USD)',
     splot_assets_jirong: 'Financial Account(USD)',
+
+    tiaokuan: 'Registration Terms',
 }
