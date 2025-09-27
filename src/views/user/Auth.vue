@@ -9,23 +9,26 @@
         :class="{ disabled: item.status === 1 || item.status === 3 }"
         @click="handleItemClick(item)"
       >
-        <div class="item-content">
-          <span class="item-text">{{ t(item.nameKey) }}</span>
+        <div class="item-header">
+          <div class="item-content">
+            <span class="item-text">{{ t(item.nameKey) }}</span>
+          </div>
+          <div class="item-right">
+            <div v-if="item.status === 1" class="status-badge verified">
+              <div class="status-icon">✓</div>
+              <span>{{ t('verified') }}</span>
+            </div>
+            <div v-else-if="item.status === 3" class="status-badge pending">
+              <div class="status-icon pending">⏱</div>
+              <span>{{ t('pending') }}</span>
+            </div>
+            <div v-else class="status-badge unverified">
+              <span>{{ t('unverified') }}</span>
+            </div>
+            <span class="arrow">›</span>
+          </div>
         </div>
-        <div class="item-right">
-          <div v-if="item.status === 1" class="status-badge verified">
-            <div class="status-icon">✓</div>
-            <span>{{ t('verified') }}</span>
-          </div>
-          <div v-else-if="item.status === 3" class="status-badge pending">
-            <div class="status-icon pending">⏱</div>
-            <span>{{ t('pending') }}</span>
-          </div>
-          <div v-else class="status-badge unverified">
-            <span>{{ t('unverified') }}</span>
-          </div>
-          <span class="arrow">›</span>
-        </div>
+        <p class="item-description">{{ t(item.descriptionKey) }}</p>
       </div>
     </div>
 
@@ -53,10 +56,17 @@ const verificationItems = ref([
   {
     id: 1,
     nameKey: 'real_name_auth',
+    descriptionKey: 'real_name_auth_desc', // 完成基本的电子邮件或手机身份验证，系统将自动以电邮或手机通知资金交易并立即追踪市场动态。
     status: 0, // 0: 未验证, 1: 已验证, 2: 拒绝, 3: 审核中
     type: 'real-name'
   },
-
+  {
+    id: 2,
+    nameKey: 'advanced_auth',
+    descriptionKey: 'advanced_auth_desc', // 通过真实身份信息认证后，我们将为您安排7×24小时专属VIP客服服务。
+    status: 0,
+    type: 'advanced'
+  }
 ]);
 
 const allVerified = computed(() => {
@@ -74,9 +84,17 @@ const fetchUserAuthStatus = async () => {
       {
         id: 1,
         nameKey: 'real_name_auth',
+        descriptionKey: 'real_name_auth_desc',
         status: user.realauth_status,
         type: 'real-name'
       },
+      {
+        id: 2,
+        nameKey: 'advanced_auth',
+        descriptionKey: 'advanced_auth_desc',
+        status: user.certification_status,
+        type: 'advanced'
+      }
     ];
   } catch (err) {
     showFailToast(t('fetch_user_info_failed'));
@@ -119,7 +137,6 @@ onUnmounted(() => {
 });
 </script>
 
-
 <style lang="scss" scoped>
 .container {
   background-color: #f5f5f5;
@@ -132,8 +149,7 @@ onUnmounted(() => {
 
 .verification-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 20px 16px;
   margin-bottom: 12px;
   background: var(--bg-sub);
@@ -151,21 +167,49 @@ onUnmounted(() => {
   &:last-child {
     margin-bottom: 0;
   }
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
 }
 
-.verification-item.disabled {
-  opacity: 0.6;
-  pointer-events: none;
+.item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 12px;
 }
+
 .item-content {
   display: flex;
   align-items: center;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .item-text {
   font-size: 16px;
   color: var(--text-color);
   font-weight: 500;
+  line-height: 1.4;
+}
+
+.item-description {
+  font-size: 13px;
+  color: #999;
+  line-height: 1.5;
+  margin: 0;
+  padding: 8px 12px;
+  background: rgba(255, 0, 0, 0.05);
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  border-radius: 6px;
+  //width: 100%;
 }
 
 .item-right {
@@ -236,37 +280,6 @@ onUnmounted(() => {
   }
 }
 
-// 保留原有样式
-.content {
-  margin: 16px;
-  padding: 16px;
-  background: #fff;
-  border-radius: 10px;
-}
-
-.van-cell {
-  flex-direction: column;
-  padding: 0 !important;
-
-  :deep(.van-field__label) {
-    width: 80%;
-    margin-top: 15px;
-
-    label {
-      font-size: 16px;
-    }
-  }
-
-  :deep(.van-field__value) {
-    line-height: 42px;
-    border-bottom: 1px solid #c3c3c3;
-
-    input {
-      font-size: 19px;
-    }
-  }
-}
-
 .van-theme-dark {
   .container {
     background-color: transparent;
@@ -274,6 +287,12 @@ onUnmounted(() => {
 
   .verification-item {
     background: #333;
+  }
+
+  .item-description {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ccc;
   }
 }
 </style>

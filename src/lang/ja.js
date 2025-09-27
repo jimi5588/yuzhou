@@ -594,4 +594,10 @@ export default {
     splot_assets_jirong: '金融口座(USD)',
 
     tiaokuan: 'とうろくきやく',
+    idCard: '身分証明書',
+    passport: 'パスポート',
+    driverLicense: '運転免許証',    
+
+    real_name_auth_desc: '本人確認を完了すると,より多くの機能が利用可能になります',
+    advanced_auth_desc: '高度認証を完了すると,より多くの機能が利用可能になります',
 }

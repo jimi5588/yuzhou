@@ -492,5 +492,11 @@ export default {
     splot_assets_jirong: 'Akaun Kewangan(USD)',
 
     tiaokuan: 'Syarat Pendaftaran',
+    idCard: 'Kad Pengenalan',
+    passport: 'Pasport',
+    driverLicense: 'Lesen Memandu',
+
+    advanced_auth_desc: 'Setelah mengesahkan maklumat identiti sebenar, kami akan mengatur perkhidmatan pelanggan VIP eksklusif 7×24 jam untuk anda.',
+    real_name_auth_desc: 'Selesaikan pengesahan e-mel atau telefon asas, sistem akan memberitahu transaksi dana melalui e-mel atau telefon secara automatik dan segera menjejaki dinamik pasaran.',
 
 }

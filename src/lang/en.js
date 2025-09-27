@@ -601,4 +601,9 @@ export default {
     splot_assets_jirong: 'Financial Account(USD)',
 
     tiaokuan: 'Registration Terms',
+    idCard: 'ID Card',
+    passport: 'Passport',
+    driverLicense: 'Driver License',   
+    real_name_auth_desc: 'Complete basic email or phone verification, the system will automatically notify fund transactions via email or phone and immediately track market dynamics.',
+    advanced_auth_desc: 'After authenticating with real identity information, we will arrange 7×24 hour exclusive VIP customer service for you.', 
 }

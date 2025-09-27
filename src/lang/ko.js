@@ -561,4 +561,12 @@ export default {
     splot_assets_jirong: '금융 계좌(USD)',
 
     tiaokuan: '가입 약관',
+
+    idCard: '신분증',
+    passport: '여권',
+    driverLicense: '운전면허증',
+
+    real_name_auth_desc: '실명 인증은 자금 안전을 위해 필수입니다. 실명 인증 후 출금 한도가 증가합니다.',
+
+    advanced_auth_desc: '고급 인증은 더 높은 출금 한도를 제공하며, 더 많은 기능을 잠금 해제합니다.',
 }

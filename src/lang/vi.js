@@ -597,4 +597,11 @@ export default {
     splot_assets_jirong: 'Tài khoản tài chính (USD)',
 
     tiaokuan: "Điều khoản đăng ký",
+
+    idCard: "CMND",
+    passport: "Hộ chiếu",
+    driverLicense: "Bằng lái xe",    
+
+    advanced_auth_desc: "Xác thực nâng cao giúp bảo vệ tài khoản của bạn tốt hơn và tăng hạn mức rút tiền hàng ngày.",
+    real_name_auth_desc: "Xác thực danh tính thực giúp bảo vệ tài khoản của bạn và tăng hạn mức rút tiền hàng ngày.",
 }
