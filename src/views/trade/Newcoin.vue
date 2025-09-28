@@ -4,31 +4,27 @@
                 <span class="iconfont icon-shuaxin" @click="toPage('ncrecords')"> {{$t('shengou_my')}}</span>
             </template>
     </TopBar>
-    <List :listRefresh="listRefresh" @load-data="loadData" v-slot:default="slotProps">
-          <!-- 列表渲染 -->
-          <div class="order-item" v-for="item in list" :key="item.id">
-            <div class="item-row">
-              <div class="item">
-                <span class="item-title">{{ t('trade_opening_price') }}</span>
-                <span class="item-value">{{ item.open_price }}</span>
-              </div>
-              <div class="item">
-                <span class="item-title">{{ t('trade_current_price') }}</span>
-                <span class="item-value">{{ item.current_price }}</span>
-              </div>
+    <div class="content">  
+        <div class="feature-card">
+            <img src="../../assets/images/ss3.webp" class="feature-img" />
+            <div class="feature-text">
+                <p>
+                We do the work for you. We partner with experts at the Gates Foundation
+                to identify vetted projects where additional funding from our community
+                of donors can complement and accelerate work that is already under way.
+                </p>
+                <a
+                class="feature-btn"
+                href="https://www.gatesphilanthropypartners.org/"
+                target="_blank"
+                >
+                Learn how you can give with us
+                </a>
             </div>
-            <div class="item-row">
-              <div class="item">
-                <span class="item-title">{{ t('trade_margin') }}</span>
-                <span class="item-value">{{ item.margin }}</span>
-              </div>
-              <div class="item">
-                <span class="item-title">{{ t('trade_position_opening_time') }}</span>
-                <span class="item-value">{{ item.order_time }}</span>
-              </div>
-            </div>
-          </div>
-        </List>
+        </div>
+        <p class="title"><img src="../../assets/images/s1.png" /></p>
+        <p class="title"><img src="../../assets/images/s2.png" /></p>
+    </div>
     <FloatBubble ></FloatBubble>
 
 </template>
@@ -117,5 +113,72 @@ const toPage = (path) => {
         color: #000;
     }
 }
+
+.content {
+    padding: 16px;
+
+    p.title {
+        font-size: 17px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+
+        img {
+            display: block;
+            max-width: 100%;   // 限制宽度
+            height: auto;      // 等比缩放
+            margin: 0 auto;    // 居中
+            border-radius: 6px; // 看起来更美观，可选
+        }
+    }
+}
+
+.feature-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-bottom: 24px;
+  text-align: center;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .feature-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .feature-text {
+    padding: 16px;
+
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #444;
+      margin-bottom: 16px;
+    }
+
+    .feature-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: #fff;
+      font-weight: bold;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      }
+    }
+  }
+}
+
 
 </style>
