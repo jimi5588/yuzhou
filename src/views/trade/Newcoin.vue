@@ -1,8 +1,8 @@
 <template>
-    <TopBar  :title="$t('shengou_new')">
-            <template #right>
+    <TopBar  :title="$t('shouquanxinxi')">
+            <!-- <template #right>
                 <span class="iconfont icon-shuaxin" @click="toPage('ncrecords')"> {{$t('shengou_my')}}</span>
-            </template>
+            </template> -->
     </TopBar>
     <div class="content">  
         <div class="feature-card">

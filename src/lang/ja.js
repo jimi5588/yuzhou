@@ -598,6 +598,8 @@ export default {
     passport: 'パスポート',
     driverLicense: '運転免許証',    
 
+    shouquan: '認証',
+    shouquanxinxi: '認証情報',
     real_name_auth_desc: '本人確認を完了すると,より多くの機能が利用可能になります',
     advanced_auth_desc: '高度認証を完了すると,より多くの機能が利用可能になります',
 }

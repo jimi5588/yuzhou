@@ -57,9 +57,9 @@
                     </template>
                 </van-grid-item>
 
-                <van-grid-item :text="$t('shengou')" @click="toPage('newcoin')" v-if="true">
+                <van-grid-item :text="$t('shouquan')" @click="toPage('newcoin')" v-if="true">
                     <template #icon>
-                        <img src="../../assets/images/bondip.png" width="30px" />
+                        <img src="../../assets/images/shouquan.png" width="30px" />
                     </template>
                 </van-grid-item>
 
