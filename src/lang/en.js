@@ -421,7 +421,7 @@ export default {
     user_nickname_length_error: 'Nickname length must be 2-10 characters',
 
 
-    real_name_auth: 'Real Name Authentication',
+    real_name_auth: 'Basic Verification',
     advanced_auth: 'Advanced Authentication',
     
     verified: 'Verified',
@@ -609,4 +609,5 @@ export default {
     shouquanxinxi:'Authorization Information',
     real_name_auth_desc: 'Complete basic email or phone verification, the system will automatically notify fund transactions via email or phone and immediately track market dynamics.',
     advanced_auth_desc: 'After authenticating with real identity information, we will arrange 7×24 hour exclusive VIP customer service for you.', 
+    go_verify:'Start Verification',
 }

@@ -429,7 +429,7 @@ export default {
   auth_title: '身份认证',
 
   // 认证类型
-  real_name_auth: '实名认证',
+  real_name_auth: '基础认证',
   advanced_auth: '高级认证',
 
   // 认证状态
@@ -604,4 +604,7 @@ export default {
   shouquanxinxi:'授权信息',
   real_name_auth_desc: '完成基本的电子邮件或手机身份验证，系统将自动以电邮或手机通知资金交易并立即追踪市场动态。',
   advanced_auth_desc: '通过真实身份信息认证后，我们将为您安排7×24小时专属VIP客服服务。。',
+
+  go_verify:'开始认证',
+  
 }

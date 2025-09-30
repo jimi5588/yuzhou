@@ -29,6 +29,12 @@
           </div>
         </div>
         <p class="item-description">{{ t(item.descriptionKey) }}</p>
+        <!-- 新增认证按钮 -->
+        <div v-if="item.status === 0 || item.status === 2" class="item-action">
+          <van-button type="primary" size="small" @click="handleItemClick(item)" style="width: 360px;">
+            {{ t('go_verify') }}
+          </van-button>
+        </div>
       </div>
     </div>
 
@@ -294,5 +300,21 @@ onUnmounted(() => {
     border-color: rgba(255, 255, 255, 0.2);
     color: #ccc;
   }
+}
+
+.verification-item {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.item-action {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.van-button--primary {
+    color: var(--van-button-primary-color);
+    background: #fcd434;
+    border: var(--van-button-border-width) solid var(--van-button-primary-border-color);
 }
 </style>

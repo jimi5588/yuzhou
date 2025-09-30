@@ -491,5 +491,6 @@ export default {
     shouquan: 'การให้สิทธิ์',
     shouquanxinxi: 'ข้อมูลการให้สิทธิ์',
     advanced_auth_desc: 'เพื่อความปลอดภัยของบัญชีและการถอนเงิน กรุณาทำการยืนยันตัวตนขั้นสูง',
-    realname_auth_desc: 'เพื่อความปลอดภัยของบัญชี กรุณาทำการยืนยันตัวตน',     
+    realname_auth_desc: 'เพื่อความปลอดภัยของบัญชี กรุณาทำการยืนยันตัวตน',    
+    go_verify:'Start Verification', 
 }

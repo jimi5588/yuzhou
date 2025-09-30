@@ -602,4 +602,5 @@ export default {
     shouquanxinxi: '認証情報',
     real_name_auth_desc: '本人確認を完了すると,より多くの機能が利用可能になります',
     advanced_auth_desc: '高度認証を完了すると,より多くの機能が利用可能になります',
+    go_verify:'検証の開始',
 }

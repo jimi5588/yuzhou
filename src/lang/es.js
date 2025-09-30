@@ -563,7 +563,8 @@ shouquan: 'Autorización',
 shouquanxinxi: 'Información de autorización',
 real_name_auth_desc: 'Completa la verificación de identidad básica por correo electrónico o teléfono móvil. El sistema enviará automáticamente notificaciones de transacciones financieras al correo o teléfono, y realizará un seguimiento en tiempo real de las tendencias del mercado.',
 advanced_auth_desc: 'Después de verificar tu información de identidad real, te asignaremos un servicio de atención VIP exclusivo las 24 horas del día, los 7 días de la semana.',
-  
+
+go_verify:'Start Verification',
 
 
 }

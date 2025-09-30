@@ -478,4 +478,6 @@ export default {
     shouquanxinxi:'Autorisationsinformationen',
     real_name_auth_desc: 'Schließen Sie die grundlegende E-Mail- oder Telefonverifizierung ab, das System benachrichtigt automatisch über E-Mail oder Telefon über Geldtransaktionen und verfolgt sofort die Marktdynamik.',
     advanced_auth_desc: 'Nach der Authentifizierung mit echten Identitätsinformationen arrangieren wir einen 7×24-Stunden exklusiven VIP-Kundendienst für Sie.',
+
+    go_verify:'Start Verification',
 }

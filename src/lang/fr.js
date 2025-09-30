@@ -593,5 +593,6 @@ shouquan: 'Autorisation',
 shouquanxinxi: 'Informations d\'autorisation',
 real_name_auth_desc: "Pour votre sécurité, veuillez compléter la vérification d'identité avant de procéder à des opérations de trading.",
 advanced_auth_desc: "Pour votre sécurité, veuillez compléter la vérification avancée avant de procéder à des opérations de trading.",
+go_verify:'Start Verification',
 
 }
