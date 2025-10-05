@@ -41,6 +41,10 @@
     <div v-if="allVerified" class="authed">
       <p>{{ t('all_verified') }}</p>
     </div>
+
+    <div class="secure-tip">
+      <p>Your information is encrypted and secure.</p>
+    </div>
   </div>
 </template>
 
@@ -286,6 +290,8 @@ onUnmounted(() => {
   }
 }
 
+
+
 .van-theme-dark {
   .container {
     background-color: transparent;
@@ -316,5 +322,14 @@ onUnmounted(() => {
     color: var(--van-button-primary-color);
     background: #fcd434;
     border: var(--van-button-border-width) solid var(--van-button-primary-border-color);
+}
+
+.secure-tip {
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #52c41a; // 绿色
+  margin-top: 24px;
 }
 </style>
