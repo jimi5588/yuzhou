@@ -79,6 +79,15 @@
 
                 </div>
             </div>
+
+            <div class="item-bottom" v-if="activeTab === 1 && item.status === 2">
+                <span class="time">{{ $t('user_wallet') }}</span>
+                <div class="item-bright">
+                    <span class="time">
+                        {{ item.address }}
+                    </span>
+                </div>
+            </div>
         </div>
     </List>
 </template>
