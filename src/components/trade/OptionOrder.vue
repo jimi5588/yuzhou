@@ -1,129 +1,131 @@
 <template>
-    <div class="page">
-        <List :listRefresh="listRefresh" :enableLoadMore="false" @load-data="loadData" v-slot:default="slotProps">
-            <div class="trade-records">
-                <van-cell-group insert :border="false" v-for="(item, index) in slotProps.list" :key="index"
-                @click="showOrderDetail(item)">
-                    <van-cell :title="t('trade_trading_pair')" :value="item.product_name"/>
-                    <van-cell :class="item.direction === 1 ? 'green' : 'red'" :title="t('trade_direction')" :value="item.direction === 1 ? t('trade_buy_more') : t('trade_buy_less')"/>
-                    <van-cell :title="t('trade_purchase_price')" :value="item.close_price"/>
-                    <van-cell :title="t('trade_quantity')" :value="item.amount"/>
-                    <van-cell :title="t('common_second')" :value="`${item.trade_time} S`" />
-                    <van-cell :title="t('trade_order_time')" :value="item.create_time"/>
-                    <van-cell :class="item.profitloss > 0 ? 'green' : 'red'" :title="t('trade_profit_and_loss')" :value="item.profitloss"/>
-                </van-cell-group>
-            </div>
-        </List>
-    </div>
+  <div class="page">
+    <List :listRefresh="listRefresh" :enableLoadMore="true" @load-data="loadData" v-slot:default="slotProps">
+      <div class="trade-records">
+        <van-cell-group insert :border="false" v-for="(item, index) in slotProps.list" :key="item.order_id"
+          @click="showOrderDetail(item)">
+          <van-cell :title="t('trade_trading_pair')" :value="item.product_name"/>
+          <van-cell :class="item.direction === 1 ? 'green' : 'red'" :title="t('trade_direction')" 
+            :value="item.direction === 1 ? t('trade_buy_more') : t('trade_buy_less')"/>
+          <van-cell :title="t('trade_purchase_price')" :value="item.close_price"/>
+          <van-cell :title="t('trade_quantity')" :value="item.amount"/>
+          <van-cell :title="t('common_second')" :value="`${item.trade_time} S`" />
+          <van-cell :title="t('trade_order_time')" :value="item.create_time"/>
+          <van-cell :class="item.profitloss > 0 ? 'green' : 'red'" :title="t('trade_profit_and_loss')" :value="item.profitloss"/>
+        </van-cell-group>
+      </div>
+    </List>
 
+    <!-- 弹窗详情 -->
     <van-dialog v-model:show="showOrderDialog" :show-confirm-button="false" :show-cancel-button="false">
-        <div class="dialog-content">
-            <div class="dialog-title">
-                <span>{{  order.product_name}}</span>
-                <van-icon name="cross" size="20" @click="showOrderDialog = false" />
-            </div>
-
-            <div class="dialog-price" :class="{ green: profit > 0 }">
-                {{ order.profitloss}}
-            </div>
-
-            <div class="dialog-item">
-                <span class="label">{{ t('common_type') }}</span>
-                <span class="value" v-if="order.direction == 1">{{ t('trade_buy_up') }}</span>
-                <span class="value" v-else>{{ t('trade_buy_fall') }}</span>
-            </div>
-
-            <div class="dialog-item">
-                <span class="label">{{ t('common_number') }}</span>
-                <span class="value">{{ order.amount }}</span>
-            </div>
-
-            <div class="dialog-item">
-                <span class="label">{{ t('trade_opening_price') }}</span>
-                <span class="value">{{ order.open_price }}</span>
-            </div>
-
-            <div class="dialog-item">
-                <span class="label">{{ t('trade_actual_deal') }}</span>
-                <span class="value">{{ order.close_price }}</span>
-            </div>
-
-            <div class="dialog-item">
-                <span class="label">{{ t('common_second') }}</span>
-                <span class="value">{{ order.trade_time_sec }}</span>
-            </div>
-
-            <div class="dialog-item">
-                <span class="label">{{ t('trade_profit_rate') }}</span>
-                <span class="value">{{ order.profitrate }}</span>
-            </div>
-
-            <div class="dialog-item">
-                <span class="label">{{ t('trade_estimated_profit_and_loss') }}</span>
-                <span class="value" :class="{ green: order.profitloss > 0 }">{{ order.profitloss }}</span>
-            </div>
-
-            <div class="dialog-item">
-                <span class="label">{{ t('trade_position_opening_time') }}</span>
-                <span class="value">{{ order.create_time }}</span>
-            </div>
-
-            <div class="dialog-item">
-                <span class="label">{{ t('trade_close_time') }}</span>
-                <span class="value">{{ order.pincang_time }}</span>
-            </div>
+      <div class="dialog-content">
+        <div class="dialog-title">
+          <span>{{ order.product_name }}</span>
+          <van-icon name="cross" size="20" @click="showOrderDialog = false" />
         </div>
+
+        <div class="dialog-price" :class="{ green: order.profitloss > 0 }">
+          {{ order.profitloss }}
+        </div>
+
+        <div class="dialog-item">
+          <span class="label">{{ t('common_type') }}</span>
+          <span class="value" v-if="order.direction == 1">{{ t('trade_buy_up') }}</span>
+          <span class="value" v-else>{{ t('trade_buy_fall') }}</span>
+        </div>
+
+        <div class="dialog-item">
+          <span class="label">{{ t('common_number') }}</span>
+          <span class="value">{{ order.amount }}</span>
+        </div>
+
+        <div class="dialog-item">
+          <span class="label">{{ t('trade_opening_price') }}</span>
+          <span class="value">{{ order.open_price }}</span>
+        </div>
+
+        <div class="dialog-item">
+          <span class="label">{{ t('trade_actual_deal') }}</span>
+          <span class="value">{{ order.close_price }}</span>
+        </div>
+
+        <div class="dialog-item">
+          <span class="label">{{ t('common_second') }}</span>
+          <span class="value">{{ order.trade_time }}</span>
+        </div>
+
+        <div class="dialog-item">
+          <span class="label">{{ t('trade_profit_rate') }}</span>
+          <span class="value">{{ order.profitrate }}</span>
+        </div>
+
+        <div class="dialog-item">
+          <span class="label">{{ t('trade_estimated_profit_and_loss') }}</span>
+          <span class="value" :class="{ green: order.profitloss > 0 }">{{ order.profitloss }}</span>
+        </div>
+
+        <div class="dialog-item">
+          <span class="label">{{ t('trade_position_opening_time') }}</span>
+          <span class="value">{{ order.create_time }}</span>
+        </div>
+
+        <div class="dialog-item">
+          <span class="label">{{ t('trade_close_time') }}</span>
+          <span class="value">{{ order.pincang_time }}</span>
+        </div>
+      </div>
     </van-dialog>
+  </div>
 </template>
 
 <script setup>
-import TopBar from '@/components/common/TopBar.vue';
-import { ref, computed } from 'vue';
+import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useStore } from 'vuex'
 import { getOrderList, getOrderRecord } from '@/api';
 
-const { t } = useI18n()
-const store = useStore()
+const { t } = useI18n();
 
-const listRefresh = ref(false)
-
-const showOrderDialog = ref(false)
-const order = ref({})
+const showOrderDialog = ref(false);
+const order = ref({});
 
 const props = defineProps({
-    symbol: {
-        type: String,
-        default: null
-    },
-    status: {
-        type: Number,
-        default: 0
-    }
-})
+  symbol: { type: String, default: null },
+  status: { type: Number, default: 0 }
+});
 
+const listRefresh = ref(true);
+
+// 监听 status 变化刷新列表
+watch(() => props.status, () => {
+  listRefresh.value = true;
+});
+
+// 获取数据
 const loadData = (params, successCallback, errCallback) => {
-    listRefresh.value = false
-    let obj = null
-    showLoadingToast(t('common_loading'))
-    if (props.symbol) {
-        obj = getOrderList(props.symbol, props.status, params)
-    } else {
-        obj = getOrderRecord(params)
-    }
-    obj.then(res => {
-        successCallback(res.result)
-    }).catch(err => {
-        errCallback(err)
+  listRefresh.value = false;
+
+  let request = props.symbol
+    ? getOrderList(props.symbol, props.status, params)
+    : getOrderRecord({ ...params, status: props.status });
+
+  request
+    .then(res => {
+      successCallback({
+        list: res.result.list || [],
+        total: res.result.total || 0
+      });
     })
-}
+    .catch(err => {
+      errCallback(err);
+    });
+};
 
 const showOrderDetail = (item) => {
-    order.value = item
-    showOrderDialog.value = true
-}
-
+  order.value = item;
+  showOrderDialog.value = true;
+};
 </script>
+
 
 <style lang="scss" scoped>
 

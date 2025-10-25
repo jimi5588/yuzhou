@@ -1,283 +1,193 @@
 <template>
-    <div class="trade-detail">
-        <List :listRefresh="listRefresh" @load-data="loadData" v-slot:default="slotProps">
-            <div class="order-item" v-for="item in list" :key="item.id">
-                <div class="order-header">
-                    <div class="left">
-                        <span class="buy-tag" v-if="item.trade_type == 1">{{ t('common_buy') }}</span>
-                        <span class="buy-tag" v-else>{{ t('common_sell') }}</span>
-                        <span class="lot-size">{{ item.symbol }}</span>
-                        <span class="lot-size">x{{ Number(item.order_quantity) + t('trade_lots') }}</span>
-                    </div>
-                    <div class="right">
-                        <span class="price" :class="item.tempProfitPrice < 0 ? 'down' : 'up'">{{ item.tempProfitPrice
-                        }}</span>
-                    </div>
-                </div>
-                <div class="item-row">
-                    <div class="item">
-                        <span class="item-title">{{ t('trade_opening_price') }}</span>
-                        <span class="item-value">{{ item.open_price }}</span>
-                    </div>
-                    <div class="item">
-                        <span class="item-title">{{ t('trade_take_profit_price') }}</span>
-                        <span class="item-value">{{ item.take_profit_price }}</span>
-                    </div>
-                    <div class="item">
-                        <span class="item-title">{{ t('trade_current_price') }}</span>
-                        <span class="item-value">{{ item.current_price }}</span>
-                    </div>
-                </div>
-                <div class="item-row">
-                    <div class="item">
-                        <span class="item-title">{{ t('trade_stop_loss_price') }}</span>
-                        <span class="item-value">{{ item.stop_loss_price }}</span>
-                    </div>
-                    <div class="item">
-                        <span class="item-title">{{ t('trade_margin') }}</span>
-                        <span class="item-value">{{ item.margin }}</span>
-                    </div>
-                    <div class="item">
-                        <span class="item-title">{{ t('trade_overnight_fee') }}</span>
-                        <span class="item-value">{{ item.overnight_fee }}</span>
-                    </div>
-                </div>
-                <div class="item-row">
-                    <div class="item">
-                        <span class="item-title">{{ t('trade_lot_fee') }}</span>
-                        <span class="item-value">{{ item.fee }}</span>
-                    </div>
-                    <div class="item">
-                        <span class="item-title">{{ t('trade_profit_loss_ratio') }}</span>
-                        <span class="item-value">----</span>
-                    </div>
-                    <div class="item">
-                        <span class="item-title">{{ t('trade_position_opening_time') }}</span>
-                        <span class="item-value">{{ item.order_time }}</span>
-                    </div>
-                </div>
+  <div class="trade-detail">
+    <List :listRefresh="props.listRefresh" @load-data="loadData" v-slot:default="{ list }">
+      <div class="order-item" v-for="item in list" :key="item.id">
+        <div class="order-header">
+          <div class="left">
+            <span class="buy-tag" v-if="item.trade_type == 1">{{ t('common_buy') }}</span>
+            <span class="sell-tag" v-else>{{ t('common_sell') }}</span>
+            <span class="lot-size">{{ item.symbol }}</span>
+            <span class="lot-size">x{{ item.order_quantity + t('trade_lots') }}</span>
+          </div>
+          <div class="right">
+            <span class="price" :class="item.tempProfitPrice < 0 ? 'down' : 'up'">{{ item.tempProfitPrice }}</span>
+          </div>
+        </div>
 
-                <div class="button-group" v-if="item.status === 1">
-                    <van-button type="primary" class="action-btn" @click="showProfitDialog(item)">
-                        {{ t('trade_set_profit_and_stop_loss') }}
-                    </van-button>
-                    <van-button type="primary" class="action-btn" @click="cancelOrder(item)">
-                        {{ t('trade_cancel_order') }}
-                    </van-button>
-                </div>
-            </div>
-        </List>
-    </div>
+        <div class="item-row">
+          <div class="item">
+            <span class="item-title">{{ t('trade_opening_price') }}</span>
+            <span class="item-value">{{ item.open_price }}</span>
+          </div>
+          <div class="item">
+            <span class="item-title">{{ t('trade_take_profit_price') }}</span>
+            <span class="item-value">{{ item.take_profit_price }}</span>
+          </div>
+          <div class="item">
+            <span class="item-title">{{ t('trade_current_price') }}</span>
+            <span class="item-value">{{ item.current_price }}</span>
+          </div>
+        </div>
 
-    <div class="dialog">
-        <van-dialog v-model:show="closePositionDialog" :confirm-button-text="t('common_confirm')"
-            :cancel-button-text="t('common_cancel')" :show-cancel-button="true" @confirm="confirmClosePosition">
-            <div class="dialog-content">
-                <div class="dialog-title">
-                    <span>{{ t('trade_close_sure_message') }}</span>
-                    <van-icon name="cross" size="20" @click="closePositionDialog = false" />
-                </div>
+        <div class="item-row">
+          <div class="item">
+            <span class="item-title">{{ t('trade_stop_loss_price') }}</span>
+            <span class="item-value">{{ item.stop_loss_price }}</span>
+          </div>
+          <div class="item">
+            <span class="item-title">{{ t('trade_margin') }}</span>
+            <span class="item-value">{{ item.margin }}</span>
+          </div>
+          <div class="item">
+            <span class="item-title">{{ t('trade_overnight_fee') }}</span>
+            <span class="item-value">{{ item.overnight_fee }}</span>
+          </div>
+        </div>
 
-                <div class="button-group">
-                    <div class="action-btn" :class="{ active: closePositionType === 0 }" @click="closePositionType = 0">
-                        {{ t('trade_close_all_positions') }}
-                    </div>
+        <div class="item-row">
+          <div class="item">
+            <span class="item-title">{{ t('trade_lot_fee') }}</span>
+            <span class="item-value">{{ item.fee }}</span>
+          </div>
+          <div class="item">
+            <span class="item-title">{{ t('trade_position_opening_time') }}</span>
+            <span class="item-value">{{ item.order_time }}</span>
+          </div>
+        </div>
 
-                    <div class="action-btn" :class="{ active: closePositionType === 1 }" @click="closePositionType = 1">
-                        {{ t('trade_only_ping_more_orders') }}
-                    </div>
+        <div class="button-group" v-if="item.status === 1">
+          <van-button type="primary" class="action-btn" @click="showProfitDialog(item)">
+            {{ t('trade_set_profit_and_stop_loss') }}
+          </van-button>
+          <van-button type="danger" class="action-btn" @click="cancelOrder(item)">
+            {{ t('trade_cancel_order') }}
+          </van-button>
+        </div>
+      </div>
+    </List>
 
-                    <div class="action-btn" :class="{ active: closePositionType === 2 }" @click="closePositionType = 2">
-                        {{ t('trade_only_close_empty_orders') }}
-                    </div>
-                </div>
+    <!-- 止盈止损弹窗 -->
+    <van-dialog
+      v-model:show="setProfitDialog"
+      :confirm-button-text="t('common_confirm')"
+      :cancel-button-text="t('common_cancel')"
+      show-cancel-button
+      @confirm="setProfitAndStopLoss"
+    >
+      <div class="dialog-content">
+        <div class="dialog-title">
+          <span>{{ t('trade_set_profit_and_stop_loss') }}</span>
+          <van-icon name="cross" size="20" @click="setProfitDialog = false" />
+        </div>
 
-            </div>
-        </van-dialog>
+        <van-row :gutter="[0, 15]">
+          <van-col span="12" class="label">
+            <span>{{ t('trade_take_profit_price') }}：</span>
+          </van-col>
+          <van-col span="12">
+            <van-stepper v-model="profitPrice" input-width="70px" />
+          </van-col>
 
-        <van-dialog v-model:show="setProfitDialog" :confirm-button-text="t('common_confirm')"
-            :cancel-button-text="t('common_cancel')" :show-cancel-button="true" @confirm="setProfitAndStopLoss">
-            <div class="dialog-content">
-                <div class="dialog-title">
-                    <span>{{ t('trade_set_profit_and_stop_loss') }}</span>
-                    <van-icon name="cross" size="20" @click="setProfitDialog = false" />
-                </div>
-
-                <van-row :gutter="[0, 15]">
-                    <van-col span="12" class="label">
-                        <span>{{ t('trade_take_profit_price') }}：</span>
-                    </van-col>
-                    <van-col span="12">
-                        <van-stepper v-model="profitPrice" input-width="100px" />
-                    </van-col>
-                    <van-col span="24" class="expect">
-                        <span>{{ t('trade_expected_profit') }}：{{ expectProfit }}</span>
-                    </van-col>
-                    <van-col span="12" class="label">
-                        <span>{{ t('trade_stop_loss_price') }}：</span>
-                    </van-col>
-                    <van-col span="12">
-                        <van-stepper v-model="lossPrice" input-width="100px" />
-                    </van-col>
-                    <van-col span="24" class="expect">
-                        <span>{{ t('trade_expected_loss') }}：{{ expectLoss }}</span>
-                    </van-col>
-                </van-row>
-
-            </div>
-        </van-dialog>
-    </div>
+          <van-col span="12" class="label">
+            <span>{{ t('trade_stop_loss_price') }}：</span>
+          </van-col>
+          <van-col span="12">
+            <van-stepper v-model="lossPrice" input-width="70px" />
+          </van-col>
+        </van-row>
+      </div>
+    </van-dialog>
+  </div>
 </template>
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { useI18n } from 'vue-i18n';
+import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router';
-import { getAllContractOrderList, setContract, closeContract } from '@/api';
+import { getAllContractOrderList, setContract, closeContract } from '@/api'
+import { showSuccessToast, showFailToast, showConfirmDialog } from 'vant'
 
-const { t } = useI18n();
+const { t } = useI18n()
 const store = useStore()
-const router = useRouter();
 
-const currencySymbol = computed(() => store.state.currencySymbol)
-const currencyMap = computed(() => store.state.currencyMap)
-const currency = computed(() => store.state.currencyMap[store.state.currencySymbol])
-const listRefresh = ref(false)
-const list = ref([])
-
-const closePositionDialog = ref(false)
-const closePositionType = ref(0)
-const setProfitDialog = ref(false)
-const profitPrice = ref(99414.2)
-const expectProfit = ref(13352595.90)
-const lossPrice = ref(99414.2)
-const expectLoss = ref(0.00)
-const selectOrder = ref(null)
-const totalProfitPrice = ref(0)
-const totalFengxian = ref(0)
-
-const onClickLeft = () => {
-    router.back();
-};
-
+// ✅ 接收父组件的 props
 const props = defineProps({
-    status: {
-        type: Number,
-        default: null
-    }
+  status: { type: [Number, String], default: null },
+  listRefresh: { type: Boolean, default: false }
 })
 
-watch(currencyMap, (newVal, oldVal) => {
-    totalProfitPrice.value = 0
-    list.value.forEach(item => {
-        item.tempProfitPrice = getTempProfitPrice(item).price
-        item.tempFengxian = getTempProfitPrice(item).fengxian
-        totalProfitPrice.value += Number(item.tempProfitPrice)
-        totalProfitPrice.value += Number(item.tempProfitPrice)
-        totalFengxian.value += Number(item.tempFengxian)
-    })
-}, { immediate: true, deep: true })
+const setProfitDialog = ref(false)
+const profitPrice = ref(0)
+const lossPrice = ref(0)
+const selectOrder = ref(null)
+const currencyMap = computed(() => store.state.currencyMap)
 
+// ✅ 数据加载方法
 const loadData = (params, successCallback, errCallback) => {
-    listRefresh.value = false
-    showLoadingToast(t('common_loading'))
-    // params.symbol = currencySymbol.value
-    if (props.status) {
-        params.status = props.status
-    }
-    getAllContractOrderList(params).then(res => {
-        successCallback(res.result.data)
-        if (params.page === 1) {
-            list.value = res.result.data
-        } else {
-            list.value.push(...res.result.data)
-        }
-    }).catch(err => {
-        errCallback(err)
+  getAllContractOrderList({ ...params, status: props.status })
+    .then(res => {
+      successCallback({
+        list: res.result.list || [],
+        total: res.result.count || 0
+      })
+    })
+    .catch(err => {
+      errCallback(err)
+      console.error('加载失败', err)
     })
 }
 
-const getItmeCurrencyPrice = (item) => {
-    if (item.status === 1) {  //进行中
-        let symbol = item.symbol.toLowerCase()
-        if (currencyMap.value && currencyMap.value[symbol]) {
-            return currencyMap.value[symbol].price
-        }
-    }
-    return item.current_price
-}
-
+// ✅ 盈亏计算
 const getTempProfitPrice = (item) => {
-    let price = (getItmeCurrencyPrice(item) - item.open_price) * item.order_quantity
-    let fengxian = Math.abs((getItmeCurrencyPrice(item) - item.open_price) * item.order_quantity / item.open_price * 100)
-
-    price = item.trade_type == 1 ? price : -price
-
-    return {
-        price: price.toFixed(5),
-        fengxian: fengxian.toFixed(2)  // 返回绝对值百分比，保留两位小数
-    }
+  const diff = (item.current_price - item.open_price) * item.order_quantity
+  const profit = item.trade_type == 1 ? diff : -diff
+  const risk = Math.abs((diff / item.open_price) * 100)
+  return {
+    price: profit.toFixed(2),
+    fengxian: risk.toFixed(2)
+  }
 }
 
-
+// ✅ 弹窗处理
 const showProfitDialog = (item) => {
-    let price = getItmeCurrencyPrice(item)
-    selectOrder.value = item
-    profitPrice.value = price
-    lossPrice.value = price
-    setProfitDialog.value = true
-}
-
-const confirmClosePosition = () => {
-    // showLoadingToast(t('common_loading'))
-    // let params = { symbol: currencySymbol.value }
-    // if (closePositionType.value !== 0) {
-    //     params.tradetype = closePositionType.value
-    // }
-    // batchCloseContract(params).then(res => {
-    //     showSuccessToast(t('common_success'))
-    //     listRefresh.value = true
-    // }).catch(err => {
-    //     showFailToast(err.message)
-    // })
+  selectOrder.value = item
+  profitPrice.value = item.take_profit_price || item.current_price
+  lossPrice.value = item.stop_loss_price || item.current_price
+  setProfitDialog.value = true
 }
 
 const setProfitAndStopLoss = () => {
-    let params = {
-        id: selectOrder.value.id,
-        stop_loss_price: lossPrice.value,
-        target_profit_price: profitPrice.value,
-    }
-    showLoadingToast(t('common_loading'))
-    setContract(params).then(res => {
-        showSuccessToast(t('common_success'))
-        listRefresh.value = true
-    }).catch(err => {
-        showFailToast(err.message)
-    })
-};
+  const params = {
+    id: selectOrder.value.id,
+    stop_loss_price: lossPrice.value,
+    target_profit_price: profitPrice.value
+  }
+  setContract(params).then(() => {
+    showSuccessToast(t('common_success'))
+  }).catch(err => {
+    showFailToast(err.message)
+  })
+}
 
 const cancelOrder = (item) => {
-    showConfirmDialog({
-        message: t('trade_close_sure_message'),
-        cancelButtonText: t('common_cancel'),
-        confirmButtonText: t('common_confirm')
+  showConfirmDialog({
+    message: t('trade_close_sure_message'),
+    cancelButtonText: t('common_cancel'),
+    confirmButtonText: t('common_confirm')
+  })
+    .then(() => {
+      closeContract({ id: item.id }).then(() => {
+        showSuccessToast(t('common_success'))
+        // ✅ 直接刷新整个页面
+          setTimeout(() => {
+            window.location.reload()
+          }, 500) // 给 toast 一点时间显示
+      })
     })
-        .then(() => {
-            let params = { id: item.id }
-            showLoadingToast(t('common_loading'))
-            closeContract(params).then(res => {
-                showSuccessToast(t('common_success'))
-                listRefresh.value = true
-            }).catch(err => {
-                showFailToast(err.message)
-            })
-        })
-        .catch(() => { });
-};
-
+    .catch(() => {})
+}
 </script>
+
 
 <style lang="scss" scoped>
 .trade-detail {
@@ -401,6 +311,9 @@ const cancelOrder = (item) => {
             font-size: 14px
         }
 
+        .van-button--primary{
+            height: 44px !important;
+        }
         .van-button--primary van-button__text {
             font-size: 14px !important;
             height: 30px !important;

@@ -8,12 +8,11 @@
         <div class="item" v-for="item in slotProps.list">
             <div class="item-top">
                 <p>{{ item.currency }}</p>
-                <p>{{ item.amout || item.amount }}<br />USD</p>
+                <p>{{ item.money }}<br /></p>
 
             </div>
             <div class="item-bottom">
                 <span class="time"></span>
-
                 <div class="item-bright">
                     <span class="status">
                         <!-- 充值状态 -->
@@ -52,7 +51,7 @@
             </div>
 
             <div class="item-bottom">
-                <span class="time">{{ activeTab == 0 ? $t('recharge') : $t('common_withdraw') }}</span>
+                <span class="time">{{ activeTab == 0 ? $t('recharge') : $t('common_withdraw') }}({{ $t('common_time') }})</span>
                 <div class="item-bright">
                     <span class="status">
                         {{ item.time }}
@@ -79,12 +78,35 @@
 
                 </div>
             </div>
-
-            <div class="item-bottom" v-if="activeTab === 1 && item.status === 2">
+            <div class="item-bottom" v-if="activeTab === 0 ">
+                <span class="time">{{ $t('Number_of_accounts_received') }}</span>
+                <div class="item-bright">
+                    <span class="time">
+                        {{  item.money  }}
+                    </span>
+                </div>
+            </div>
+            <div class="item-bottom" v-if="activeTab === 1 && item.currency !== 'BANK'">
                 <span class="time">{{ $t('user_wallet') }}</span>
                 <div class="item-bright">
                     <span class="time" id="walletAddress">
                         {{ item.address }}
+                    </span>
+                </div>
+            </div>
+            <div class="item-bottom" v-if="activeTab === 1 && item.currency === 'BANK'">
+                <span class="time">{{ $t('bank_card_number') }}</span>
+                <div class="item-bright">
+                    <span class="time">
+                        {{ item.cardno }}
+                    </span>
+                </div>
+            </div>            
+            <div class="item-bottom" v-if="activeTab === 1 ">
+                <span class="time">{{ $t('handling') }}</span>
+                <div class="item-bright">
+                    <span class="time">
+                        {{ item.fee }}
                     </span>
                 </div>
             </div>
@@ -105,37 +127,29 @@ const router = useRouter();
 const activeTab = ref(0);
 const listRefresh = ref(false);
 
-const list = ref([
-    // { type: 1, currency: 'JPY', money: 200000.0030, status: 1, time: '2025-03-26 23:42:57'},
-    // { type: 1, currency: 'USD', money: 9999.9955, status: 1, time: '2025-03-26 22:47:01'},
-    // { type: 1, currency: 'JPY', money: 9999.9955, status: 1, time: '2025-03-26 22:46:49'},
-    // { type: 2, currency: 'JPY', money: 200000.0030, status: 1, time: '2025-03-26 22:46:49'},
-]);
+const list = ref([]);
 
 const onClickTab = () => {
     listRefresh.value = true
 }
 
 const loadData = (params, successCallback, errCallback) => {
-    listRefresh.value = false
-    let obj = null
-    showLoadingToast(t('common_loading'))
-    if (activeTab.value === 0) {
-        obj = getDepositRecord(params)
-    } else {
-        obj = getWithdrawRecord(params)
-    }
-    obj.then(res => {
+  listRefresh.value = false;
 
-        if (activeTab.value === 0) {
-            successCallback(res.result)
-        } else {
-            successCallback(res.result.data)
-        }
-    }).catch(err => {
-        errCallback(err)
+  const requestFn = activeTab.value === 0 ? getDepositRecord : getWithdrawRecord;
+
+  requestFn(params)
+    .then(res => {
+    console.log('接口返回', res);
+      successCallback({
+        list: res.result.list || [],
+        total: res.result.total || 0
+      });
     })
-}
+    .catch(err => {
+      errCallback(err);
+    });
+};
 
 </script>
 

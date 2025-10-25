@@ -18,8 +18,8 @@
         </van-tabs>
 
         <div class="list">
-            <OptionOrder v-if="typeTab === 0 && activeTab === 0" :symbol="currencySymbol" :status="activeTab"></OptionOrder>
-            <OptionOrder v-if="typeTab === 0 && activeTab === 1"></OptionOrder>
+            <OptionOrder v-if="typeTab === 0 && activeTab === 0" :status="activeTab"></OptionOrder>
+            <OptionOrder v-if="typeTab === 0 && activeTab === 1" :status="activeTab"></OptionOrder>
             <ContractOrder v-if="typeTab === 1 && activeTab === 0" :status="1"></ContractOrder>
             <ContractOrder v-if="typeTab === 1 && activeTab === 1" :status="2"></ContractOrder>
         </div>
