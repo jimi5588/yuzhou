@@ -8,7 +8,7 @@
         <div class="item" v-for="item in slotProps.list">
             <div class="item-top">
                 <p>{{ item.currency }}</p>
-                <p>{{ item.money }}<br /></p>
+                <p>{{ item.amount }}<br /></p>
 
             </div>
             <div class="item-bottom">
@@ -82,7 +82,7 @@
                 <span class="time">{{ $t('Number_of_accounts_received') }}</span>
                 <div class="item-bright">
                     <span class="time">
-                        {{  item.money  }}
+                        {{  item.amount  }}
                     </span>
                 </div>
             </div>

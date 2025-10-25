@@ -66,14 +66,12 @@ const loadData = (params, successCallback, errCallback) => {
             successCallback({
                 list: res.result.list || [],
                 total: res.result.count || 0
-            });
+            })
         })
         .catch(err => {
             errCallback(err)
         })
 }
-
-
 </script>
 
 
