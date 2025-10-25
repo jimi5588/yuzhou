@@ -83,7 +83,7 @@
             <div class="item-bottom" v-if="activeTab === 1 && item.status === 2">
                 <span class="time">{{ $t('user_wallet') }}</span>
                 <div class="item-bright">
-                    <span class="time">
+                    <span class="time" id="walletAddress">
                         {{ item.address }}
                     </span>
                 </div>
@@ -226,7 +226,14 @@ const loadData = (params, successCallback, errCallback) => {
                 align-items: end;
             }
         }
+        
+#walletAddress {
+  font-size: 18px; /* 比原来略大即可，比如 16px 或 18px */
+}
+
+        
     }
+    
 }
 
 .status-pending {
