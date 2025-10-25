@@ -63,12 +63,17 @@ const loadData = (params, successCallback, errCallback) => {
     showLoadingToast(t('common_loading'));
     getMoneyChanges(params)
         .then(res => {
-            successCallback(res.result.data)
+            successCallback({
+                list: res.result.list || [],
+                total: res.result.count || 0
+            });
         })
         .catch(err => {
             errCallback(err)
         })
 }
+
+
 </script>
 
 

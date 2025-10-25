@@ -228,7 +228,7 @@ export const createOrder = (params) => {
 
 //合约订单列表(单个)
 export const getOrderList = (symbol, status, params) => {
-    return request.get("orderlist?symbol="+symbol+"&status="+status, { params: params })
+    return request.get("orderlist?"+"&status="+status, { params: params })
 }
 
 //合约订单列表

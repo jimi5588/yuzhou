@@ -1,88 +1,95 @@
 <template>
-    <van-list v-if="list != null && list.length > 0" v-model:loading="loading" :finished="finished"
-        :immediate-check="false" finished-text="" :loading-text="t('common_loading')" @load="onLoad">
-
-        <slot :list="list"></slot>
-
+  <div>
+    <!-- 列表 -->
+    <van-list
+      v-model:loading="loading"
+      :finished="finished"
+      :immediate-check="false"
+      finished-text=""
+      :loading-text="t('common_loading')"
+      @load="onLoad"
+    >
+      <slot :list="list"></slot>
     </van-list>
-    <van-empty v-else-if="(list == null || list.length == 0) && !loading"
-        style="margin-top: 60px;">
-        {{ $t('common_empty_data') }}
-        <template #image>          
-            <img src="../../assets/images/empty.d67f5618.svg"/>
-        </template>
+
+    <!-- 空数据 -->
+    <van-empty v-if="!loading && list.length === 0" style="margin-top: 60px;">
+      {{ t('common_empty_data') }}
+      <template #image>
+        <img src="../../assets/images/empty.d67f5618.svg"/>
+      </template>
     </van-empty>
+  </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n()
-const loading = ref(false)
-const finished = ref(false)
-const pageIndex = ref(1)
-const pageSize = ref(20)
-const list = ref([])
+const { t } = useI18n();
+
+const loading = ref(false);
+const finished = ref(false);
+const pageIndex = ref(1);
+const pageSize = ref(10);
+const list = ref([]);
+const total = ref(0);
 
 const props = defineProps({
-    listRefresh: {
-        type: Boolean,
-        default: false
-    },
-    enableLoadMore: {
-        type: Boolean,
-        default: true
-    }
-})
+  listRefresh: { type: Boolean, default: false },
+  enableLoadMore: { type: Boolean, default: true }
+});
 
 const emit = defineEmits(['load-data']);
 
+// 监听外部刷新标识
 watch(() => props.listRefresh, (val) => {
-    if (val) onRefresh()
-})
+  if (val) onRefresh();
+});
 
+// 上拉加载
 const onLoad = () => {
-    loading.value = true
-    if (pageIndex.value == 1) showLoadingToast('loading')
-    let params = { "page": pageIndex.value, "limit": pageSize.value }
-    triggerLoadData(params, data => {
-        closeToast()
-        loading.value = false
-        if (data.length < pageSize.value || !props.enableLoadMore) {
-            finished.value = true
-        } else {
-            finished.value = false
-        }
-        pageIndex.value += 1
-        list.value.push(...data)
-    }, err => {
-        closeToast()
-        loading.value = false
-        finished.value = true
-    })
-}
+  loading.value = true;
+  const params = { page: pageIndex.value, limit: pageSize.value };
 
-const triggerLoadData = (params, successCallback, errCallback) => {
-    emit('load-data', params, successCallback, errCallback);
+  emit('load-data', params, (res) => {
+    loading.value = false;
+
+    // 下拉刷新清空列表
+    if (pageIndex.value === 1) list.value = [];
+
+    // 合并数据
+    list.value.push(...(res.list || []));
+    total.value = res.total || 0;
+
+    // 判断是否加载完成
+    finished.value = !props.enableLoadMore || list.value.length >= total.value;
+
+    pageIndex.value += 1;
+  }, (err) => {
+    loading.value = false;
+    finished.value = true;
+    console.error(err);
+  });
 };
 
+// 下拉刷新
 const onRefresh = () => {
-    pageIndex.value = 1
-    list.value = []
-    onLoad()
+  pageIndex.value = 1;
+  finished.value = false;
+  list.value = [];
+  onLoad();
 };
 
-onRefresh()
-
+// 初始化加载
+onRefresh();
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped lang="scss">
 .van-empty {
-    :deep(.van-empty__image) {
-        width: 192px !important;
-        height: 144px !important;
-    }
+  :deep(.van-empty__image) {
+    width: 192px !important;
+    height: 144px !important;
+  }
 }
 </style>

@@ -67,18 +67,24 @@ const toOrderList = () => {
 }
 
 const loadData = (params, successCallback, errCallback) => {
-    showLoadingToast(t('common_loading'))
     listRefresh.value = false
     params.symbol = currencySymbol.value
-    getContractOrderList(params).then(res => {
-        successCallback(res.result.data)
-    }).catch(err => {
+
+    getContractOrderList(params)
+      .then(res => {
+        successCallback({
+          list: res.result.data || [],
+          total: res.result.count || 0
+        })
+      })
+      .catch(err => {
         errCallback(err)
-    })
+      })
 }
 
+
 const cancelOrder = (item) => {
-    showLoadingToast(t('common_loading'))
+    //showLoadingToast(t('common_loading'))
     showConfirmDialog({
         message:t('trade_close_sure_message'),
         cancelButtonText: t('common_cancel'),
@@ -86,7 +92,7 @@ const cancelOrder = (item) => {
     })
     .then(() => {
         let params = { id: item.id }
-        showLoadingToast(t('common_loading'))
+        //showLoadingToast(t('common_loading'))
         closeContract(params).then(res => {
             showSuccessToast(t('common_success'))
             listRefresh.value = true
