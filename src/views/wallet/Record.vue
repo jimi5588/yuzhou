@@ -33,15 +33,15 @@
                         <!-- 提现状态 -->
                         <template v-else>
                             <span :class="[
-                                item.status === 0 ? 'status-pending' :
-                                    item.status === 1 ? 'status-success' :
-                                        item.status === 2 ? 'status-failed' :
+                                item.status === 1 ? 'status-pending' :
+                                    item.status === 2 ? 'status-success' :
+                                        item.status === 3 ? 'status-failed' :
                                             'status-unknown'
                             ]">
                                 {{
-                                    item.status == 0 ? $t('review_pending') :
-                                        item.status == 1 ? $t('review_success') :
-                                            item.status == 2 ? $t('review_failed') :
+                                    item.status == 1 ? $t('review_pending') :
+                                        item.status == 2 ? $t('review_success') :
+                                            item.status == 3 ? $t('review_failed') :
                                                 $t('status_unknown')
                                 }}
                             </span>
