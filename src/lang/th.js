@@ -493,4 +493,5 @@ export default {
     advanced_auth_desc: 'เพื่อความปลอดภัยของบัญชีและการถอนเงิน กรุณาทำการยืนยันตัวตนขั้นสูง',
     realname_auth_desc: 'เพื่อความปลอดภัยของบัญชี กรุณาทำการยืนยันตัวตน',    
     go_verify:'Start Verification', 
+    customer_service_contact_message: 'คลิกเพื่อติดต่อฝ่ายบริการลูกค้าออนไลน์',
 }

@@ -17,7 +17,7 @@
             </van-swipe>
             <van-notice-bar :scrollable="false" mode="link" @click="toPage('message/center')" >
                 <template #left-icon>
-                    <img src="../../assets/images/ljl.png" width="25px" />
+                    <img src="../../assets/images/favicon.ico" width="25px" />
                 </template>
                 <template #right-icon>
                     <img src="../../assets/images/notify.7457eaf5.svg" width="20px" />

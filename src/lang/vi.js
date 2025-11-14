@@ -606,4 +606,6 @@ export default {
     shouquanxinxi: 'Thông tin cấp quyền',
     advanced_auth_desc: "Xác thực nâng cao giúp bảo vệ tài khoản của bạn tốt hơn và tăng hạn mức rút tiền hàng ngày.",
     real_name_auth_desc: "Xác thực danh tính thực giúp bảo vệ tài khoản của bạn và tăng hạn mức rút tiền hàng ngày.",
+    go_verify:'Bắt đầu xác minh', 
+    customer_service_contact_message: 'Nhấp để liên hệ dịch vụ khách hàng trực tuyến',
 }

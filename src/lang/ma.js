@@ -501,4 +501,5 @@ export default {
     advanced_auth_desc: 'Setelah mengesahkan maklumat identiti sebenar, kami akan mengatur perkhidmatan pelanggan VIP eksklusif 7×24 jam untuk anda.',
     real_name_auth_desc: 'Selesaikan pengesahan e-mel atau telefon asas, sistem akan memberitahu transaksi dana melalui e-mel atau telefon secara automatik dan segera menjejaki dinamik pasaran.',
     go_verify:'Start Verification',
+    customer_service_contact_message: 'Klik untuk menghubungi perkhidmatan pelanggan dalam talian',
 }

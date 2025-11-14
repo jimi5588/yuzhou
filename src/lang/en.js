@@ -610,4 +610,5 @@ export default {
     real_name_auth_desc: 'Complete basic email or phone verification, the system will automatically notify fund transactions via email or phone and immediately track market dynamics.',
     advanced_auth_desc: 'After authenticating with real identity information, we will arrange 7×24 hour exclusive VIP customer service for you.', 
     go_verify:'Start Verification',
+    customer_service_contact_message: 'Click to contact online customer service',
 }

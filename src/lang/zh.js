@@ -607,4 +607,5 @@ export default {
 
   go_verify:'开始认证',
   
+  customer_service_contact_message: '点击此处联系在线客服',
 }

@@ -2,13 +2,13 @@
   <div class="kefu-card">   
     <!-- Header -->
     <div class="kefu-header">
-      <van-icon name="down" size="24" :color="isDark? '#FFF' : '#000'" @click="onBack" style="transform: rotate(90deg);"/>
+      <van-icon name="down" size="24" :color="isDark ? '#FFF' : '#000'" @click="onBack" style="transform: rotate(90deg);" />
       <div class="kefu-header-text">
         <div class="kefu-hello">{{ t('kefu_hello') }}</div>
         <div class="kefu-question">{{ t('kefu_help') }}</div>
       </div>
       <svg class="kefu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
       </svg>
     </div>
 
@@ -16,20 +16,23 @@
     <section class="kefu-section">
       <h3 class="kefu-section-title">{{ t('kefu_title') }}</h3>
 
-      <div class="kefu-grid">
-        <button
-          v-for="item in kefus"
-          :key="item.id"
-          class="kefu-item"
-          :class="{ 'kefu-item--highlight': isHighlighted(item) }"
-          @click="openUrl(item.url, item.type)"
-        >
-          <div class="kefu-item-icon">
-            <img :src="baseUrl + item.image" :alt="item.name" />
-          </div>
-          <div class="kefu-item-text">{{ item.name }}</div>
-        </button>
-      </div>
+      <div class="kefu-grid kefu-grid--full">
+  <button
+    v-for="item in kefus"
+    :key="item.id"
+    class="kefu-item kefu-item--line"
+    :class="{ 'kefu-item--highlight': isHighlighted(item) }"
+    @click="handleKefuClick(item)"
+  >
+    <div class="kefu-line-left">
+      {{ t('customer_service_contact_message') }} →
+    </div>
+
+    <div class="kefu-line-right">
+      <img :src="baseUrl + item.image" :alt="item.name" />
+    </div>
+  </button>
+</div>
     </section>
 
     <!-- Send us a request -->
@@ -39,7 +42,7 @@
         <div class="kefu-message-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M3 8l7.9 4.3a2 2 0 0 0 2.2 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5A2 2 0 0 0 3 7v10a2 2 0 0 0 2 2z"/>
+              d="M3 8l7.9 4.3a2 2 0 0 0 2.2 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5A2 2 0 0 0 3 7v10a2 2 0 0 0 2 2z" />
           </svg>
         </div>
         <div class="kefu-message-text">
@@ -47,40 +50,29 @@
           <div>{{ t('kefu_message_hint') }}</div>
         </div>
         <svg class="kefu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
       </button>
     </section>
 
-    <!-- FAQ / Search -->
+    <!-- FAQ -->
     <section class="kefu-section kefu-section--border kefu-faq-section">
       <h3 class="kefu-section-title">{{ t('kefu_ask_text') }}</h3>
 
       <div class="kefu-search">
         <svg class="kefu-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/>
+            d="M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z" />
         </svg>
-        <input
-          v-model="searchQuery"
-          type="text"
-          placeholder="Search for help"
-        />
+        <input v-model="searchQuery" type="text" placeholder="Search for help" />
       </div>
 
       <ul class="kefu-faq">
         <li v-for="(q, i) in filteredFaqs" :key="i">
           <div class="faq-question" @click="toggleFaq(i)">
             <span>• {{ q.question }}</span>
-            <svg
-              class="kefu-arrow"
-              :class="{ 'faq-open': openFaq === i }"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M9 5l7 7-7 7"/>
+            <svg class="kefu-arrow" :class="{ 'faq-open': openFaq === i }" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </div>
           <transition name="faq">
@@ -93,10 +85,10 @@
     </section>
   </div>
 
-  <!-- 在线客服 iframe 弹窗 -->
+  <!-- H5: 在线客服 iframe 弹窗 -->
   <van-popup
     v-model:show="showIframe"
-    :style="{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, width: '100%' }"
+    :style="{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, width: '100%', height: '100%' }"
     position="bottom"
     :overlay="true"
     :close-on-click-overlay="false"
@@ -115,11 +107,10 @@
       />
     </div>
   </van-popup>
-
 </template>
 
 <script setup>
-import { computed, onBeforeMount, ref } from 'vue'
+import { ref, computed, onBeforeMount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
@@ -136,64 +127,62 @@ const iframeUrl = ref('')
 const searchQuery = ref('')
 const openFaq = ref(null)
 const faqs = ref([
-{
-  question: t('kefu_ask_text1'),
-  answer: t('kefu_answer_text1'),
-},
-{
-  question: t('kefu_ask_text2'),
-  answer: t('kefu_answer_text2'),
-},
-{
-  question: t('kefu_ask_text3'),
-  answer: t('kefu_answer_text3'),
-},
+  { question: t('kefu_ask_text1'), answer: t('kefu_answer_text1') },
+  { question: t('kefu_ask_text2'), answer: t('kefu_answer_text2') },
+  { question: t('kefu_ask_text3'), answer: t('kefu_answer_text3') },
 ])
 
+// ✅ 判断是否是移动端
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+
 const filteredFaqs = computed(() => {
-const q = searchQuery.value.trim().toLowerCase()
-if (!q) return faqs.value
-return faqs.value.filter(v => v.question.toLowerCase().includes(q))
+  const q = searchQuery.value.trim().toLowerCase()
+  if (!q) return faqs.value
+  return faqs.value.filter(v => v.question.toLowerCase().includes(q))
 })
 
 onBeforeMount(() => {
-customerservice()
-  .then(res => {
-    kefus.value = Array.isArray(res?.result?.data) ? res.result.data : []
-  })
-  .catch(() => {
-    kefus.value = []
-  })
+  customerservice()
+    .then(res => {
+      kefus.value = Array.isArray(res?.result?.data) ? res.result.data : []
+    })
+    .catch(() => {
+      kefus.value = []
+    })
 })
 
-const openUrl = (url, type = '') => {
-if (!url || url === '#') return
-if (type === 'online') {
-  iframeUrl.value = url
-  showIframe.value = true
-} else {
-  window.open(url, '_blank')
-}
+const handleKefuClick = (item) => {
+  if (!item?.url) return
+
+  if (item.type === 'online') {
+    // ✅ 美洽客服
+    if (isMobile) {
+      iframeUrl.value = item.url
+      showIframe.value = true
+    } else {
+      window.open(item.url, '_blank')
+    }
+  } else {
+    // 其他客服（Telegram、WhatsApp）
+    window.open(item.url, '_blank')
+  }
 }
 
 const isHighlighted = (item) => {
-const name = (item?.name || '').toLowerCase()
-const type = (item?.type || '').toLowerCase()
-return name.includes('line') || type === 'line'
+  const name = (item?.name || '').toLowerCase()
+  const type = (item?.type || '').toLowerCase()
+  return name.includes('line') || type === 'line'
 }
 
 const toggleFaq = (i) => {
-openFaq.value = openFaq.value === i ? null : i
+  openFaq.value = openFaq.value === i ? null : i
 }
-// 页面跳转封装
-const toPage = (path) => {
-    router.push("/pages/" + path)
-}
+
 const onBack = () => {
-   router.push("/");
-    
+  router.push("/")
 }
 </script>
+
 
 <style scoped>
 /* 页面整体始终满屏 */
@@ -433,4 +422,60 @@ transition: all 0.2s ease;
 opacity: 0;
 transform: translateY(-4px);
 }
+
+.kefu-grid--full {
+  grid-template-columns: 1fr !important; /* 单列 */
+}
+
+.kefu-item--line {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid #d1d5db !important;
+  background: #fff !important;
+
+  padding: 14px 16px;
+  border-radius: 12px;
+  box-sizing: border-box;
+
+  transition: box-shadow .2s ease, transform .05s ease;
+}
+
+.kefu-item--line:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,.05);
+}
+
+.kefu-line-left {
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+  flex: 1;
+  text-align: left;
+  padding-right: 4px;   /* 更紧凑 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 防止超出换行 */
+}
+
+.kefu-line-right {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 关键新增：向左移动 5px */
+  margin-left: -5px;
+}
+.kefu-line-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 </style>

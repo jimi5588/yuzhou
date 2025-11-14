@@ -480,4 +480,5 @@ export default {
     advanced_auth_desc: 'Nach der Authentifizierung mit echten Identitätsinformationen arrangieren wir einen 7×24-Stunden exklusiven VIP-Kundendienst für Sie.',
 
     go_verify:'Start Verification',
+    customer_service_contact_message: 'Kontaktieren Sie den Online-Kundenservice.',
 }

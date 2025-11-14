@@ -242,7 +242,7 @@ const loadData = (params, successCallback, errCallback) => {
         }
         
 #walletAddress {
-  font-size: 18px; /* 比原来略大即可，比如 16px 或 18px */
+  font-size: 13px; /* 比原来略大即可，比如 16px 或 18px */
 }
 
         

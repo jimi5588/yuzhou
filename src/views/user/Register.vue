@@ -12,7 +12,7 @@
     </TopBar>
 
     <div class="logo-container">
-      <img src="../../assets/images/SAXO-BeInvested-logo-blue.svg" alt="dia" class="logo">
+      <img src="../../assets/images/tsfxo-logo.svg" alt="dia" class="logo">
     </div>
     
     <div class="logo-container">

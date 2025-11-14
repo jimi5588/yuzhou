@@ -565,6 +565,6 @@ real_name_auth_desc: 'Completa la verificación de identidad básica por correo 
 advanced_auth_desc: 'Después de verificar tu información de identidad real, te asignaremos un servicio de atención VIP exclusivo las 24 horas del día, los 7 días de la semana.',
 
 go_verify:'Start Verification',
-
+customer_service_contact_message: 'Servicio al cliente en línea',
 
 }
