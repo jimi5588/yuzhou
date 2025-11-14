@@ -120,12 +120,195 @@ const { t } = useI18n()
 const store = useStore()
 const router = useRouter()
 const baseUrl = computed(() => store.state.baseUrl)
+const showTip = ref(false)
+const tipType = ref('')
+const currentUrl = ref('')
 
 const kefus = ref([])
 const showIframe = ref(false)
 const iframeUrl = ref('')
 const searchQuery = ref('')
 const openFaq = ref(null)
+
+// 复制文本到剪贴板
+const copyLink = async (text) => {
+  try {
+    await navigator.clipboard.writeText(text)
+    alert('Link copied!')
+  } catch (err) {
+    alert('Copy failed, please copy manually')
+  }
+}
+
+/**
+ * 检测指定网页是否可访问（超时后视为不可达）
+ * 返回 true = 可访问，false = 不可访问
+ * 注意：在某些 CORS 场景 fetch 可能被拦截，抛错或返回非 ok -> 视为不可访问
+ */
+const checkUrlAvailable = async (url, timeout = 1500) => {
+  try {
+    const controller = new AbortController()
+    const signal = controller.signal
+    const timer = setTimeout(() => controller.abort(), timeout)
+
+    // 使用 HEAD 请求尽量减少流量
+    const res = await fetch(url, { method: 'HEAD', mode: 'no-cors', signal })
+    clearTimeout(timer)
+
+    // 当 mode: 'no-cors' 时，浏览器会返回一个 opaque response，这时无法判断 ok，
+    // 所以如果没有抛错，我们认为可访问（环境差异大，但对内置浏览器通常是可用的信号）。
+    // 为了稳妥：如果 res.type === 'opaque' 或 res.ok === true，则视为可访问。
+    if (!res) return false
+    if (res.type === 'opaque') return true
+    return !!res.ok
+  } catch (e) {
+    return false
+  }
+}
+
+// 简单判断平台
+const ua = navigator.userAgent || ''
+const isAndroid = /Android/i.test(ua)
+const isIOS = /iPhone|iPad|iPod/i.test(ua)
+
+// ====== Telegram 打开逻辑（先检测网页可达，再按平台尝试 scheme/intent/fallback） ======
+const openTelegram = async (url) => {
+  const domain = url.replace(/^https?:\/\/(www\.)?t\.me\//, '')
+  currentUrl.value = url
+  tipType.value = 'Telegram'
+  showTip.value = false
+
+  const canOpenWeb = await checkUrlAvailable(url, 1500)
+
+  if (canOpenWeb) {
+    // 正常浏览器或能访问 t.me: 直接打开网页（新标签）
+    try {
+      window.open(url, '_blank')
+      return
+    } catch (e) {
+      // 若 window.open 被拦截，继续尝试唤起 app
+    }
+  }
+
+  // 若到这里说明网页不可达或被内置浏览器限制：尝试唤醒 App
+  const tgScheme = `tg://resolve?domain=${domain}`
+  const intentUrl = `intent://t.me/${domain}#Intent;package=org.telegram.messenger;scheme=https;end`
+  const fallback = url
+  const start = Date.now()
+  let attemptedApp = false
+
+  // iOS: 优先用 tg://
+  if (isIOS) {
+    try {
+      window.location.href = tgScheme
+      attemptedApp = true
+    } catch (e) {}
+  } else if (isAndroid) {
+    // Android: 尝试 intent first, 然后 tg://
+    try {
+      window.location.href = intentUrl
+      attemptedApp = true
+    } catch (e) {}
+    // 延迟尝试 tg://（有些设备/浏览器更接受 scheme）
+    setTimeout(() => {
+      try {
+        window.location.href = tgScheme
+        attemptedApp = true
+      } catch (e) {}
+    }, 300)
+  } else {
+    // 其他平台先试 scheme
+    try {
+      window.location.href = tgScheme
+      attemptedApp = true
+    } catch (e) {}
+  }
+
+  // 在尝试唤起后 1s ~ 1.5s 内视为唤起成功，否则打开 fallback（网页）并显示提示
+  setTimeout(() => {
+    // 如果 1.2s 内没有离开当前页面（即可能未唤起 app），就打开网页 fallback，并显示提示
+    if (Date.now() - start < 1200) {
+      // 先尝试用 window.open 打开网页（若 app 未装）
+      try {
+        window.open(fallback, '_blank')
+      } catch (e) {
+        window.location.href = fallback
+      }
+      // 显示帮助提示，让用户手动在系统浏览器打开或复制
+      showTip.value = true
+    }
+  }, 1000)
+}
+
+// ====== WhatsApp 打开逻辑（同样先检测 wa.me 可达，再用 scheme/intent） ======
+const openWhatsApp = async (url) => {
+  // 支持 https://wa.me/<phone> 或 https://api.whatsapp.com/send?phone=...
+  currentUrl.value = url
+  tipType.value = 'WhatsApp'
+  showTip.value = false
+
+  const canOpenWeb = await checkUrlAvailable(url, 1500)
+  if (canOpenWeb) {
+    try {
+      window.open(url, '_blank')
+      return
+    } catch (e) {}
+  }
+
+  // 解析 phone 参数
+  let phone = ''
+  try {
+    const u = new URL(url)
+    if (u.hostname.includes('wa.me')) {
+      phone = u.pathname.replace('/', '')
+    } else {
+      // 处理 api.whatsapp.com/send?phone=xxx
+      phone = u.searchParams.get('phone') || ''
+    }
+  } catch (e) {
+    // 兜底：尝试从字符串提取数字
+    phone = (url.match(/(\d{6,})/) || [''])[0]
+  }
+
+  const waScheme = phone ? `whatsapp://send?phone=${phone}` : 'whatsapp://send'
+  const intentUrl = phone
+    ? `intent://send?phone=${phone}#Intent;package=com.whatsapp;scheme=whatsapp;end`
+    : `intent://send#Intent;package=com.whatsapp;scheme=whatsapp;end`
+  const fallback = url
+  const start = Date.now()
+
+  // iOS 优先 scheme，Android 尝试 intent
+  if (isIOS) {
+    try {
+      window.location.href = waScheme
+    } catch (e) {}
+  } else if (isAndroid) {
+    try {
+      window.location.href = intentUrl
+    } catch (e) {}
+    setTimeout(() => {
+      try {
+        window.location.href = waScheme
+      } catch (e) {}
+    }, 300)
+  } else {
+    try {
+      window.location.href = waScheme
+    } catch (e) {}
+  }
+
+  setTimeout(() => {
+    if (Date.now() - start < 1200) {
+      try {
+        window.open(fallback, '_blank')
+      } catch (e) {
+        window.location.href = fallback
+      }
+      showTip.value = true
+    }
+  }, 1000)
+}
+
 const faqs = ref([
   { question: t('kefu_ask_text1'), answer: t('kefu_answer_text1') },
   { question: t('kefu_ask_text2'), answer: t('kefu_answer_text2') },
