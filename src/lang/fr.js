@@ -66,6 +66,7 @@ export default {
     user_full_name: 'nom complet',
     user_email: 'e-mail',
     user_verife_code: 'Code de vérification',
+    user_id: 'ID de compte',
     user_ref_code: 'code d invitation',
     user_oldpassword:'Maintenant, nous prenons les devants パスワード',
     user_newpassword: '新しい氄パスワード',

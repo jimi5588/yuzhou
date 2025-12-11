@@ -66,6 +66,7 @@ export default {
   user_full_name: '全名',
   user_email: '电子邮件',
   user_verife_code: '验证码',
+  user_id: '账户ID',
   user_ref_code: '邀请码',
   user_oldpassword: '当前密码',
   user_newpassword: '新密码',

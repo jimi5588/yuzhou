@@ -68,6 +68,7 @@ export default {
     user_full_name: 'Nama Penuh',
     user_email: 'E-mel',
     user_verife_code: 'Kod Pengesahan',
+    user_id: 'ID Akaun',
     user_ref_code: 'Kod Jemputan',
     user_old_password: 'Kata Laluan Lama',
     user_new_password: 'Kata Laluan Baru',

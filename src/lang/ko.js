@@ -66,6 +66,7 @@ export default {
     user_full_name: '전체 이름',
     user_email: '이메일',
     user_verife_code: '인증 코드',
+    user_id: '계정 ID',
     user_ref_code: '추천 코드',
     user_old_password: '기존 비밀번호',
     user_new_password: '새 비밀번호',

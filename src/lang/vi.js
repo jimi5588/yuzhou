@@ -66,6 +66,7 @@ export default {
     user_full_name: 'Họ tên',
     user_email: 'Email',
     user_verife_code: 'Mã xác minh',
+    user_id: 'Mã tài khoản',
     user_ref_code: 'Mã mời',
     user_oldpassword: 'Mật khẩu hiện tại',
     user_newpassword: 'Mật khẩu mới',

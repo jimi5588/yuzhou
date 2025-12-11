@@ -12,10 +12,14 @@
         <div class="username">
           HI, {{ user?.username }}
         </div>
-        <div class="user-id">
+        <!-- <div class="user-id">
           {{ t('user_ref_code') }}: {{ user?.invite_code || t('user_not_available') }}
           <Icon name="copy" @click="copyInviteCode" />
-        </div>
+        </div> -->
+        <div class="user-id">
+  {{ t('user_id') }}: {{ user?.id || t('user_not_available') }}
+  <Icon name="copy" @click="copyUserId" />
+</div>
         <div class="user-id">
           {{$t('credit_score')}}:{{ user?.credit_score }}
         </div>
@@ -177,6 +181,20 @@ const copyInviteCode = () => {
       })
   }
 }
+// 复制用户ID
+const copyUserId = () => {
+  if (user.value?.id) {
+    navigator.clipboard
+      .writeText(user.value.id)
+      .then(() => {
+        showSuccessToast('Copied')
+      })
+      .catch(() => {
+        showFailToast('Replication failed')
+      })
+  }
+}
+
 
 // 货币选择后回调
 const onCurrencySelect = (currency) => {

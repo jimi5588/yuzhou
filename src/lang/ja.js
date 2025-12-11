@@ -66,6 +66,7 @@ export default {
     user_full_name: 'ユーザー名',
     user_email: 'メールアドレス',
     user_verife_code: '認証コード',
+    user_id: 'アカウントID',
     user_ref_code: '紹介コード',
     user_oldpassword:'現在のログインパスワード',  
     user_newpassword:'新しい取引パスワード',

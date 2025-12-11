@@ -66,6 +66,7 @@ export default {
     user_full_name: 'Vollständiger Name',
     user_email: 'E-Mail',
     user_verife_code: 'Bestätigungscode',
+    user_id: 'Konto-ID',
     user_ref_code: 'Einladungscode',
     user_oldpassword:'Aktuelles Passwort',
     user_newpassword: 'Neues Passwort',
